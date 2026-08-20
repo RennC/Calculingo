@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portal de Estudos - A Jornada</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { pergaminho: '#f4ebd8', tinta: '#2c241b', destaque: '#8b0000', ouro: '#d4af37' },
+                    animation: {
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'pulse-green': 'pulseGreen 1.5s ease-out'
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-2px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(4px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-8px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(8px, 0, 0)' }
+                        },
+                        pulseGreen: {
+                            '0%': { backgroundColor: 'rgba(34, 197, 94, 0.3)', borderColor: 'rgba(34, 197, 94, 1)' },
+                            '100%': { backgroundColor: 'transparent', borderColor: '#2c241b' }
+                        }
+                    }
+                } 
+            } 
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="font-size:24px"><text y="20">✒️</text></svg>'), auto;
+        }
+        button, a {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="font-size:24px"><text y="20">✒️</text></svg>'), pointer;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body class="bg-pergaminho md:bg-[#1a1510] text-tinta min-h-dvh m-0 p-0 flex flex-col items-center justify-center md:py-8">
+    <div id="root" class="w-full min-h-dvh md:min-h-0 md:max-w-4xl md:w-full bg-pergaminho md:border-4 md:border-tinta md:rounded-[2.5rem] md:shadow-2xl overflow-hidden relative flex flex-col"></div>
+    <script type="text/babel">
+        window.BANCO_DE_QUESTOES = {
+  matematica: [
+    {
+      nome: "Pré-Cálculo",
+      xpRequerido: 0,
+      questoes: [
+        {
+          id: "mat_pre_01",
+          pergunta: "Para iniciar a resolução da equação modular $$|2x - 1| = 5$$, qual o passo lógico essencial?",
+          opcoes: [
+            "Elevar ambos os lados ao quadrado imediatamente",
+            "Separar em dois casos reais: $$2x - 1 = 5$$ ou $$2x - 1 = -5$$",
+            "Passar o módulo para o outro lado subtraindo",
+            "Substituir $$x$$ por zero para testar a validade"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A definição matemática de módulo exige a análise da bifurcação dos dois casos possíveis."
+        },
+        {
+          id: "mat_pre_02",
+          pergunta: "Verdadeiro ou Falso: É correto afirmar que $$\\log(a+b) = \\log(a) \\cdot \\log(b)$$ para quaisquer reais positivos?",
+          opcoes: [
+            "Verdadeiro, pela propriedade distributiva",
+            "Falso, o correto é $$\\log(a+b) = \\log(a) + \\log(b)$$",
+            "Falso, o logaritmo da soma não corresponde ao produto dos logaritmos",
+            "Verdadeiro, mas apenas se a base for de Euler"
+          ],
+          respostaCorreta: 2,
+          explicacao: "A propriedade clássica dos logaritmos diz que $$\\log(a \\cdot b) = \\log(a) + \\log(b)$$, não há regra de desmembramento para soma."
+        },
+        {
+          id: "mat_pre_03",
+          pergunta: "Caça à Falácia algébrica:\nPasso 1: $$x = y$$\\nPasso 2: $$x^2 = xy$$\\nPasso 3: $$x^2 - y^2 = xy - y^2$$\\nPasso 4: $$(x-y)(x+y) = y(x-y)$$\\nPasso 5: $$x+y = y$$. Onde está o erro letal?",
+          opcoes: [
+            "No Passo 2",
+            "No Passo 3",
+            "No Passo 4",
+            "No Passo 5"
+          ],
+          respostaCorreta: 3,
+          explicacao: "No Passo 5, as parcelas $$(x-y)$$ são canceladas. Como $$x=y$$, estamos dividindo a equação por zero!"
+        },
+        {
+          id: "mat_pre_04",
+          pergunta: "Qual a estratégia teórica inicial para achar a função inversa de $$f(x) = \\frac{x+1}{x-1}$$?",
+          opcoes: [
+            "Derivar o numerador e o denominador",
+            "Inverter fisicamente a fração e trocar o sinal",
+            "Trocar $$x$$ por $$y$$ e isolar algebricamente o novo $$y$$",
+            "Multiplicar a equação inteira por $$-1$$"
+          ],
+          respostaCorreta: 2,
+          explicacao: "O algoritmo padrão de inversão requer a troca das variáveis para refletir a função em relação à reta $$y=x$$."
+        },
+        {
+          id: "mat_pre_05",
+          pergunta: "Verdadeiro ou Falso: A Identidade $$\\sin^2(x) + \\cos^2(x) = 1$$ é matematicamente válida apenas no primeiro quadrante.",
+          opcoes: [
+            "Verdadeiro, pois os senos ficam negativos em outros quadrantes",
+            "Falso, é uma lei universal válida para qualquer $$x$$ real",
+            "Verdadeiro, pois depende estritamente do triângulo retângulo",
+            "Falso, só é válida se $$x$$ estiver em radianos"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A identidade fundamental é baseada no raio unitário do ciclo trigonométrico e vale para todos os quadrantes, pois os sinais somem ao quadrado."
+        }
+      ]
+    },
+    {
+      nome: "Cálculo 1",
+      xpRequerido: 100,
+      questoes: [
+        {
+          id: "mat_calc1_01",
+          pergunta: "Como você daria o Próximo Passo para resolver o limite $$\\lim_{x \\to 0} \\frac{\\sin(5x)}{x}$$ mentalmente?",
+          opcoes: [
+            "Substituir $$x$$ por 0 e aceitar a indefinição",
+            "Multiplicar e dividir por 5 para forçar o limite fundamental trigonométrico",
+            "Usar a regra do quociente de polinômios",
+            "Elevar tudo ao quadrado para eliminar o seno"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Isso cria a estrutura $$\\frac{\\sin(u)}{u}$$ onde $$u=5x$$, resultando magicamente em 5."
+        },
+        {
+          id: "mat_calc1_02",
+          pergunta: "Verdadeiro ou Falso: Se a derivada $$f'(c) = 0$$, então $$c$$ é obrigatoriamente um ponto de máximo ou mínimo da função.",
+          opcoes: [
+            "Verdadeiro, é o Teorema de Fermat",
+            "Falso, pode ser apenas um ponto de inflexão na curva",
+            "Verdadeiro, a tangente horizontal garante extremos",
+            "Falso, a derivada zero indica uma assíntota vertical"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A derivada ser zero é condição necessária, mas não suficiente (ex: $$f(x)=x^3$$ em $$x=0$$ não é nem máximo nem mínimo)."
+        },
+        {
+          id: "mat_calc1_03",
+          pergunta: "Caça à Falácia (Derivadas):\nPasso 1: $$y = x^x$$\\nPasso 2: Aplicar Regra do Tombo\\nPasso 3: $$y' = x \\cdot x^{x-1} = x^x$$. Onde está o absurdo?",
+          opcoes: [
+            "No Passo 1, pois $$x^x$$ não existe",
+            "No Passo 2, a Regra do Tombo exige que o expoente seja uma constante",
+            "No Passo 3, a multiplicação de potências foi feita de forma incorreta",
+            "Não há falácia, a conta está perfeita"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A regra $$nx^{n-1}$$ só serve quando $$n$$ é um número fixo. Para base e expoente variáveis, usa-se a diferenciação logarítmica."
+        },
+        {
+          id: "mat_calc1_04",
+          pergunta: "O Próximo Passo para atacar a integral $$\\int x \\cos(x) dx$$ é:",
+          opcoes: [
+            "Fazer uma substituição simples $$u = \\cos(x)$$",
+            "Expandir por Taylor",
+            "Aplicar integração por partes com $$u = x$$ e $$dv = \\cos(x) dx$$",
+            "Integrar cada termo separadamente e multiplicar"
+          ],
+          respostaCorreta: 2,
+          explicacao: "A regra das partes fará a derivada de $$x$$ matar o termo algébrico, sobrando apenas a integral do seno."
+        },
+        {
+          id: "mat_calc1_05",
+          pergunta: "Verdadeiro ou Falso: Toda função contínua em um ponto é automaticamente derivável neste mesmo ponto.",
+          opcoes: [
+            "Verdadeiro, continuidade implica suavidade",
+            "Verdadeiro, se o limite existe, a derivada existe",
+            "Falso, a recíproca é que é verdadeira; funções podem ter \"bicos\"",
+            "Falso, continuidade sequer é requisito para derivadas"
+          ],
+          respostaCorreta: 2,
+          explicacao: "O clássico exemplo é a função módulo $$f(x) = |x|$$ em $$x=0$$: contínua, porém com um \"bico\" onde a derivada lateral diverge."
+        }
+      ]
+    },
+    {
+      nome: "Cálculo 2",
+      xpRequerido: 200,
+      questoes: [
+        {
+          id: "mat_calc2_01",
+          pergunta: "Qual a jogada mental para integrar $$\\int \\frac{1}{\\sqrt{1-x^2}} dx$$ rapidamente?",
+          opcoes: [
+            "Aplicar frações parciais no denominador",
+            "Reconhecer imediatamente como a derivada tabelada do arcosseno",
+            "Elevar tudo ao quadrado",
+            "Usar integração por partes dupla"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Certas integrais são derivadas inversas diretas. O arcosseno salva minutos de substituições trigonométricas dolorosas."
+        },
+        {
+          id: "mat_calc2_02",
+          pergunta: "Verdadeiro ou Falso: Se o limite de $$f(x)$$ no infinito é zero, então a integral imprópria $$\\int_1^\\infty f(x) dx$$ necessariamente tem valor finito.",
+          opcoes: [
+            "Verdadeiro, pois a área deforma-se para zero",
+            "Falso, a área ainda pode acumular até o infinito, como em $$1/x$$",
+            "Verdadeiro, pelo Teste da Divergência de Séries",
+            "Falso, o limite deveria ser 1"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A função harmônica $$1/x$$ vai a zero, mas sua integral resulta em $$\\ln(\\infty)$$, que é infinito."
+        },
+        {
+          id: "mat_calc2_03",
+          pergunta: "Caça à Falácia: Decomposição da integral $$\\int \\frac{1}{x^2(x-1)} dx$$. Frações propostas: $$\\frac{A}{x^2} + \\frac{B}{x-1}$$. Onde está a morte algébrica?",
+          opcoes: [
+            "O método só funciona com raízes imaginárias",
+            "Faltou o termo iterativo $$\\frac{C}{x}$$ gerado pela raiz repetida",
+            "As constantes devem estar no denominador",
+            "Esta integral não permite frações parciais"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Para fatores lineares repetidos, você deve incluir potências decrescentes: $$A/x^2 + B/x + C/(x-1)$$."
+        },
+        {
+          id: "mat_calc2_04",
+          pergunta: "Próximo Passo mental para encontrar o comprimento de arco de uma curva $$y=f(x)$$ em um dado intervalo:",
+          opcoes: [
+            "Apenas integrar a função de ponta a ponta",
+            "Montar a integral elementar da raiz quadrada: $$\\int \\sqrt{1 + (f'(x))^2} dx$$",
+            "Usar o Teorema do Valor Médio nas pontas",
+            "Derivar a função duas vezes"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Essa fórmula é a consequência direta do Teorema de Pitágoras infinitesimal $$ds^2 = dx^2 + dy^2$$."
+        },
+        {
+          id: "mat_calc2_05",
+          pergunta: "Verdadeiro ou Falso: O raio de convergência da série de Taylor de $$e^x$$ é estritamente limitado ao intervalo $$(-1, 1)$$.",
+          opcoes: [
+            "Verdadeiro, fora disso a série diverge caoticamente",
+            "Falso, a exponencial deforma o espaço para raízes complexas",
+            "Falso, o raio é infinito e a série converge para todo número real",
+            "Verdadeiro, por conta do Teste da Razão de d'Alembert"
+          ],
+          respostaCorreta: 2,
+          explicacao: "Devido aos fatoriais poderosos crescendo no denominador, a série da exponencial esmaga qualquer valor e domina a reta inteira."
+        }
+      ]
+    },
+    {
+      nome: "Cálculo 3",
+      xpRequerido: 300,
+      questoes: [
+        {
+          id: "mat_calc3_01",
+          pergunta: "Para provar que o limite $$\\lim_{(x,y) \\to (0,0)} \\frac{xy}{x^2+y^2}$$ NÃO existe, qual o atalho mental no Próximo Passo?",
+          opcoes: [
+            "Aplicar L'Hôpital duas vezes nas derivadas parciais",
+            "Aproximar pela origem usando retas diferentes como $$y=x$$ e $$y=0$$",
+            "Transformar tudo num sistema linear",
+            "Substituir o denominador por 1"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Se limites por caminhos distintos derem resultados diferentes na planície, o limite global colapsa."
+        },
+        {
+          id: "mat_calc3_02",
+          pergunta: "Verdadeiro ou Falso: O Vetor Gradiente de uma superfície escalar aponta invariavelmente para o abismo, indicando a menor taxa de variação.",
+          opcoes: [
+            "Verdadeiro, como a água descendo a montanha",
+            "Falso, ele aponta exatamente para a maior taxa de variação (subida íngreme)",
+            "Verdadeiro, o gradiente busca o zero energético",
+            "Falso, ele gira tangencialmente à curva de nível"
+          ],
+          respostaCorreta: 1,
+          explicacao: "O gradiente é a bússola topográfica da maior aclividade. Quem desce a montanha é o vetor oposto $$(-\\nabla f)$$."
+        },
+        {
+          id: "mat_calc3_03",
+          pergunta: "Caça à Falácia em derivadas parciais:\nFunção: $$f(x,y) = x^2 \\cdot y$$\\nDerivada em x calculada: $$\\frac{\\partial f}{\\partial x} = 2x$$. Onde está o erro brutal?",
+          opcoes: [
+            "A derivada de $$x^2$$ está incorreta",
+            "Como é uma multiplicação, deveria usar a regra do produto cegamente",
+            "Ignorou-se a presença de $$y$$, que atua como constante e deveria multiplicar o $$2x$$",
+            "Esqueceu de adicionar uma constante genérica $$+ C$$"
+          ],
+          respostaCorreta: 2,
+          explicacao: "Ao derivar parcialmente em $$x$$, a variável $$y$$ atua como um número frio. Assim como derivada de $$5x^2$$ é $$10x$$, de $$y x^2$$ é $$2xy$$."
+        },
+        {
+          id: "mat_calc3_04",
+          pergunta: "Próximo Passo mental para integrar uma região sobre o disco plano $$x^2 + y^2 \\leq 9$$:",
+          opcoes: [
+            "Integrar com limites infinitos",
+            "Dividir o disco em 4 quadrados aproximados",
+            "Converter o sistema para Coordenadas Polares imediatamente",
+            "Fatorar a equação do círculo"
+          ],
+          respostaCorreta: 2,
+          explicacao: "Círculos imploram por polares ($$x = r\\cos(\\theta)$$, $$y = r\\sin(\\theta)$$). O Jacobeano $$r$$ simplificará a abominação algébrica."
+        },
+        {
+          id: "mat_calc3_05",
+          pergunta: "Verdadeiro ou Falso: Segundo o Teorema de Clairaut, se as derivadas parciais mistas são contínuas, a ordem da derivação importa, ou seja, $$f_{xy} \\neq f_{yx}$$.",
+          opcoes: [
+            "Verdadeiro, o espaço matemático não é comutativo em multi-dimensões",
+            "Falso, se há continuidade, a ordem da lâmina de corte não importa: $$f_{xy} = f_{yx}$$",
+            "Verdadeiro, a regra do quociente impede a simetria",
+            "Falso, Clairaut estuda apenas equações diferenciais"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Para funções bem comportadas, o resultado de derivar em $$x$$ depois $$y$$ é idêntico a derivar em $$y$$ e depois $$x$$."
+        }
+      ]
+    },
+    {
+      nome: "Cálculo 4",
+      xpRequerido: 400,
+      questoes: [
+        {
+          id: "mat_calc4_01",
+          pergunta: "Qual é o gatilho lógico para resolver a Equação Diferencial Ordinária (EDO) linear $$y' + 3y = e^x$$?",
+          opcoes: [
+            "Separar variáveis isolando o $$dy$$ de um lado",
+            "Calcular o fator integrante multiplicador $$\\mu(x) = e^{\\int 3 dx}$$",
+            "Encontrar raízes imaginárias de Bhaskara",
+            "Usar série de Maclaurin"
+          ],
+          respostaCorreta: 1,
+          explicacao: "O fator integrante transforma magicamente o lado esquerdo na derivada de um produto perfeito."
+        },
+        {
+          id: "mat_calc4_02",
+          pergunta: "Verdadeiro ou Falso: As Séries de Fourier têm como premissa a restrição absoluta de não poderem expressar ondas quadradas contendo descontinuidades.",
+          opcoes: [
+            "Verdadeiro, funções seno e cosseno arredondam tudo",
+            "Falso, elas conseguem sintetizar saltos formando o Fenômeno de Gibbs nas pontas",
+            "Verdadeiro, o Cálculo repudia as quebras de continuidade",
+            "Falso, mas exigem números complexos para as quebras"
+          ],
+          respostaCorreta: 1,
+          explicacao: "As Séries de Fourier representam esplendidamente funções por partes e com saltos, embora ocorra a oscilação de Gibbs."
+        },
+        {
+          id: "mat_calc4_03",
+          pergunta: "Caça à Falácia em Laplace:\nProfessor escreve: $$\\mathcal{L}\\{t \\cdot \\sin(t)\\} = \\mathcal{L}\\{t\\} \\cdot \\mathcal{L}\\{\\sin(t)\\}$. Qual é o crime cometido?",
+          opcoes: [
+            "A transformada da soma não é a soma",
+            "Não existe transformada de funções temporais não triviais",
+            "A transformada de um produto JAMAIS é o produto das transformadas",
+            "O erro está no seno, deveria ser cosseno hiperbólico"
+          ],
+          respostaCorreta: 2,
+          explicacao: "A Transformada de Laplace é um operador integral linear. Ele desintegra produtos em convoluções ou exige teoremas de deslocamento na frequência."
+        },
+        {
+          id: "mat_calc4_04",
+          pergunta: "Próximo Passo mental de segurança antes de tentar integrar a EDO $$M(x,y)dx + N(x,y)dy = 0$$ chamando-a de Exata:",
+          opcoes: [
+            "Inverter o $$dx$$ com o $$dy$$",
+            "Checar brutalmente se a parcial $$M_y$$ bate perfeitamente com a parcial $$N_x$$",
+            "Analisar o domínio para evitar que seja uma elipse",
+            "Igualar tudo a um $$e^c$$"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A condição mágica de Euler $$M_y = N_x$$ garante que o campo vetorial subjacente é conservativo."
+        },
+        {
+          id: "mat_calc4_05",
+          pergunta: "Verdadeiro ou Falso: O grandioso Teorema de Stokes faz o milagre de relacionar a integral de uma linha morta fechada ao fluxo divergente passando numa superfície inflada nela.",
+          opcoes: [
+            "Verdadeiro, linha fechada cria bolhas matemáticas",
+            "Falso, relaciona com o campo Escalar",
+            "Falso, Stokes relaciona a linha à integral de superfície do Rotacional, não do divergente",
+            "Verdadeiro, rotacionais são para linhas retas"
+          ],
+          respostaCorreta: 2,
+          explicacao: "Quem lida com a divergência de um fluxo fechando um volume 3D é o Teorema de Gauss. Stokes mapeia redemoinhos (rotacional) num tambor 2D."
+        }
+      ]
+    }
+  ],
+  fisica: [
+    {
+      nome: "Física 1",
+      xpRequerido: 0,
+      questoes: [
+        {
+          id: "fis_f1_01",
+          pergunta: "Próximo Passo: Diante de um bloco deslizando em um plano inclinado com ângulo $$\\theta$$, qual é a ação mecânica imediata na mente?",
+          opcoes: [
+            "Girar a cabeça e decompor a gravidade em $$P_x = mg\\sin(\\theta)$$ e $$P_y = mg\\cos(\\theta)$$",
+            "Procurar uma constante elástica nas roldanas",
+            "Desconsiderar a Normal, pois plano inclinado anula atrito",
+            "Aplicar conservação do momento angular"
+          ],
+          respostaCorreta: 0,
+          explicacao: "Alinhar o eixo ao plano transforma um problema de duas dimensões em eixos independentes amigáveis."
+        },
+        {
+          id: "fis_f1_02",
+          pergunta: "Verdadeiro ou Falso: No contexto das energias de fricção, o trabalho operado pela força de atrito cinético é eternamente nulo.",
+          opcoes: [
+            "Verdadeiro, o atrito não tem bateria",
+            "Falso, o trabalho é invariavelmente negativo por roubar energia mecânica",
+            "Verdadeiro, desde que a Normal seja constante",
+            "Falso, é positivo e gera empuxo de plasma termal"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Forças dissipativas vetorialmente se opõem ao deslocamento ($$\\cos(180^\\circ) = -1$$), drenando o sistema."
+        },
+        {
+          id: "fis_f1_03",
+          pergunta: "Caça à Falácia em cinemática de projéteis:\nEm um lançamento oblíquo, no ápice zenital sagrado da parábola voadora, a velocidade total do corpo zera.",
+          opcoes: [
+            "A velocidade horizontal $$v_x$$ se mantém implacável; apenas a componente vertical $$v_y$$ morreu",
+            "A velocidade vertical nunca zera, é ilusão de ótica",
+            "A massa do projétil deve ser ignorada, por isso o erro",
+            "A gravidade foi invertida no equador"
+          ],
+          respostaCorreta: 0,
+          explicacao: "A inércia no eixo x continua empurrando a bola à frente, a gravidade só freia o eixo y."
+        },
+        {
+          id: "fis_f1_04",
+          pergunta: "O Próximo Passo reflexo ao presenciar uma colisão inelástica sombria onde os carros se amassam juntos é:",
+          opcoes: [
+            "Saber que a energia cinética será preservada divinamente",
+            "Evocar apenas a conservação do momento linear: $$m_1 v_1 + m_2 v_2 = (m_1+m_2)v_f$$",
+            "Achar o coeficiente de atrito do asfalto",
+            "Aplicar a equação de Torricelli para freios"
+          ],
+          respostaCorreta: 1,
+          explicacao: "No momento do caos da batida inelástica a energia cinética é perdida (calor, deformação), mas a quantidade de movimento do sistema é cravada na pedra temporal."
+        },
+        {
+          id: "fis_f1_05",
+          pergunta: "Verdadeiro ou Falso: Um asteróide perambulando pelo abismo do espaço exige que alguma propulsão invisível o empurre continuamente.",
+          opcoes: [
+            "Verdadeiro, a matéria requer energia para evitar a parada fria do atrito cósmico",
+            "Falso, pela 1ª Lei de Newton da Inércia, o movimento retilíneo uniforme sustenta-se por si só em eternidade",
+            "Verdadeiro, é a força de empuxo escuro",
+            "Falso, devido à curvatura Einsteniana forçar vetores"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Força não é necessária para manter a velocidade, mas sim para alterar a velocidade."
+        }
+      ]
+    },
+    {
+      nome: "Física 2",
+      xpRequerido: 100,
+      questoes: [
+        {
+          id: "fis_f2_01",
+          pergunta: "Próximo Passo mental ao ver um fluido ser estrangulado passando de um cano largo para uma agulha microscópica:",
+          opcoes: [
+            "A força da água diminuirá proporcionalmente",
+            "Invocar o poder de Arquimedes sobre flutuação de massa",
+            "Atirar a Equação da Continuidade $$A_1 v_1 = A_2 v_2$$ e assumir o aumento mortal da velocidade",
+            "Medir o atrito do cano pelo calor liberado"
+          ],
+          respostaCorreta: 2,
+          explicacao: "Sendo incompressível, a mesma quantidade de água que entra num lado deve sair pelo outro. Menor área, fluxo monstruosamente mais rápido."
+        },
+        {
+          id: "fis_f2_02",
+          pergunta: "Verdadeiro ou Falso: Como punição termodinâmica da Segunda Lei, a entropia global em um sistema termicamente isolado está decaindo à medida em que processos naturais ocorrem.",
+          opcoes: [
+            "Verdadeiro, o universo purifica a energia fria",
+            "Falso, o caos exige pedágio. A entropia global sempre se expande e aumenta a desordem sistêmica",
+            "Verdadeiro, conservação de calor",
+            "Falso, a entropia entra em colapso gravitacional e evapora"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A flecha do tempo empurra o isolamento para o caos máximo de microestados prováveis."
+        },
+        {
+          id: "fis_f2_03",
+          pergunta: "Caça à Falácia do Calor Gás Ideal:\nPasso 1: Expansão isotérmica (temperatura congelada).\nPasso 2: Calor transferido $$Q = 0$$. Onde está o engano?",
+          opcoes: [
+            "Se a temperatura é constante, não houve trabalho",
+            "Na isoterma, $$Q$$ não é zero. O que é zero é a alteração de Energia Interna $$\\Delta U$$. O calor inserido vira 100% de trabalho expansivo",
+            "A pressão da isoterma é que deveria ser cravada em zero",
+            "Gás ideal não realiza expansão isotérmica real"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Pela Primeira Lei $$\\Delta U = Q - W$$. Se $$T$$ fixa, $$\\Delta U = 0$$. Então o calor roubado ferve na forma de expansão volumétrica de trabalho mecânico."
+        },
+        {
+          id: "fis_f2_04",
+          pergunta: "Qual o truque obscuro no Próximo Passo ao montar a equação de um Pêndulo Físico vibrando levemente com torque $$\\tau = I\\alpha$$?",
+          opcoes: [
+            "Fatorar a inércia em momento vetorial angular",
+            "Aproximar magicamente o seno para pequenos ângulos $$\\sin(\\theta) \\approx \\theta$$ transformando numa equação harmônica exata",
+            "Anular a gravidade e focar na mola de torção",
+            "Criar uma espiral de Euler exponencial divergente"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Sem a aproximação dos senos a EDO torna-se não linear monstruosa (requerendo integrais elípticas caóticas)."
+        },
+        {
+          id: "fis_f2_05",
+          pergunta: "Verdadeiro ou Falso: O Empuxo salvador arquimediano sobre um cofre dourado atirado no oceano aumenta incansavelmente quanto mais abissal e profunda a água ficar.",
+          opcoes: [
+            "Verdadeiro, o peso d'água empurra tudo de volta com frenesi",
+            "Falso, estando totalmente mergulhado, o volume de líquido substituído é cravado, logo o Empuxo trava na constante volumétrica",
+            "Verdadeiro, o fundo do mar amassa objetos criando empuxos maiores",
+            "Falso, Empuxo se extingue com o frio oceânico letal"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A fórmula $$E = d_{fluido} \\cdot V_{deslocado} \\cdot g$$ não tem dependência com a métrica da altura h de pressão hidrostática isolada."
+        }
+      ]
+    },
+    {
+      nome: "Física 3",
+      xpRequerido: 200,
+      questoes: [
+        {
+          id: "fis_f3_01",
+          pergunta: "O Próximo Passo para desvendar o campo elétrico invisível irradiando de um fio metálico reto infinitamente espesso com carga uniforme:",
+          opcoes: [
+            "Integrar cada elétron do infinito somando cargas pontuais lentas",
+            "Envolver tudo mentalmente num cilindro fechado e invocar a onipotente Lei de Gauss",
+            "Usar Biot-Savart e transformar o fio em espira enrolada",
+            "Aplicar Lei das Malhas de Kirchhoff no vácuo central"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Simetria salva vidas e prova matemática. Gauss transforma fluxos vetoriais aterrorizantes em área vezes campo puro: $$E \\cdot 2\\pi r L = \\lambda L / \\epsilon_0$$."
+        },
+        {
+          id: "fis_f3_02",
+          pergunta: "Verdadeiro ou Falso: É regra axiomática que assim como no campo elétrico, linhas de forças do fluxo magnético nascem radiantes dos polos nortes e findam esgotadas nos polos sul.",
+          opcoes: [
+            "Verdadeiro, o dipolo magnético age com a repulsa de Coulomb na matriz",
+            "Falso, elas não possuem início nem fim. Formam elos de correntes fechados eternamente em torno das rotas (Lei de Gauss Magnética $$\\nabla \\cdot B = 0$$)",
+            "Verdadeiro, e ainda induzem vórtices gravimétricos",
+            "Falso, elas terminam nas superfícies paramagnéticas isolantes"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Monopolos magnéticos não existem na natureza. Toda linha sul magnética conecta-se por dentro do ímã de volta ao norte em eterna malha."
+        },
+        {
+          id: "fis_f3_03",
+          pergunta: "Caça à Falácia dos Circuitos\nFato alegado: Ao ligar uma bateria infinita contínua no terminal de um Capacitor, a eletricidade girará para todo o sempre circulando os polos.",
+          opcoes: [
+            "As placas do capacitor fecharão um arco elétrico explodindo a voltagem",
+            "O Capacitor após seu regime transitório atua como um desfiladeiro de circuito aberto. A corrente estacionária fenece em zero",
+            "A corrente vira alternada por ressonância harmônica da fonte RC",
+            "Falso, ele gira até queimar o resistor cerâmico vizinho"
+          ],
+          respostaCorreta: 1,
+          explicacao: "DC (corrente contínua) sofre bloqueio capacitivo terminal completo após estar carregado, segurando a tensão com zero elétrons atravessando o ar isolante das placas."
+        },
+        {
+          id: "fis_f3_04",
+          pergunta: "A regra de reflexo corporal (Próximo Passo) instantânea para decidir o desvio fatal de um elétron fuzilado no ventre num Campo Magnético:",
+          opcoes: [
+            "Calcular o trabalho linear ao quadrado extraindo sua raiz e somando o potencial",
+            "Erguer e usar a brutal Regra da Mão Direita empunhando os vetores cruza-força da Equação de Lorentz",
+            "Dividir sua carga e ignorar a gravidade pois o magnetismo repulsa as massas fracionadas",
+            "Verificar pela regra do saca-rolhas imaginário a deflexão horizontal de Gauss"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Produto vetorial entre vetor velocidade e campo dita forças perpendiculares de movimento torto que fazem cargas caírem em armadilhas de órbitas circulares."
+        },
+        {
+          id: "fis_f3_05",
+          pergunta: "Verdadeiro ou Falso: Faraday legou às eras provando que as faíscas (f.e.m) induzidas nas bobinas dos grandes geradores elétricos da humanidade dependem da imensa força estática que o fluxo magnético impõe cortando as espiras.",
+          opcoes: [
+            "Verdadeiro, fluxos espessos criam a mais destrutiva eletricidade de choque em repouso",
+            "Falso, não é o valor monumental do fluxo, mas sim e unicamente a taxa temporal dinâmica brutal de VARIAÇÃO do fluxo no espaço-tempo.",
+            "Verdadeiro, sem força estática a bobina se desintegra sem energia",
+            "Falso, Faraday focou em capacitores eletrolíticos puros"
+          ],
+          respostaCorreta: 1,
+          explicacao: "Se você deixar o ímã parado no interior do laço de cobre para sempre, nenhuma corrente nascerá. A f.e.m. exala vida apenas da derivada d/dt e no movimento frenético."
+        }
+      ]
+    },
+    {
+      nome: "Física 4",
+      xpRequerido: 300,
+      questoes: [
+        {
+          id: "fis_f4_01",
+          pergunta: "Próximo Passo: Vendo feixes de lasers rasgando uma fenda dupla nanométrica numa caverna, o físico busca os pontos da franja de interferência de luz intensa. Como?",
+          opcoes: [
+            "Comportando-a como partículas pontuais balísticas batendo atrás",
+            "Ancorando as fases em diferença construtiva e calculando $$d\\sin(\\theta) = m\\lambda$$ impiedosamente.",
+            "Igualando as frequências do laser aos ângulos incidentes",
+            "Mapeando o espalhamento térmico gerado pela fenda na pedra escura"
+          ],
+          respostaCorreta: 1,
+          explicacao: "A luz revela sua face de onda espectral e as ondas se reforçam com somas alinhadas multiplicadoras de caminhos completos."
+        },
+        {
+          id: "fis_f4_02",
+          pergunta: "Verdadeiro ou Falso: Um viajante relativístico galopando aos longos limiares da velocidade causal da luz (c) testemunha seu próprio fluxo cronológico escoando mais depressa rumo ao futuro.",
+          opcoes: [
+            "Verdadeiro, celeridade engole o tempo no paradoxo temporal invertido",
+            "Falso, a Dilatação do Tempo de Lorentz forja que seu tempo íntimo passe espantosamente arrastado aos olhos dos observadores estacionários terrenos.",
+            "Verdadeiro, gêmeos espaciais ficam mais anciões instantaneamente num buraco de minhoca",
+            "Falso, luz não possui percepção do tempo, estagnando equações na relatividade"
+          ],
+          respostaCorreta: 1,
+          explicacao: "As batidas do coração e relógio de pulso do astronauta em velocidade próxima à de c desaceleram dramaticamente, impedindo seu envelhecimento simultâneo com a Terra."
+        },
+        {
+          id: "fis_f4_03",
+          pergunta: "Caça à Falácia Efeito Fotoelétrico:\nUma lâmpada fraca e rubra não arrancava elétrons da placa alcalina estática. O cientista trocou por um holofote rubro cego de intensidade monstruosa, ansiando pelas fagulhas. Fracassou em ruína. Por que?",
+          opcoes: [
+            "Ele usou platina fria ao invés de rubídio condutor",
+            "Energia de ejeção é ditada isoladamente pela FREQUÊNCIA espectral do fóton e não por um bombardeio incessante de ondas vermelhas de baixa energia quântica.",
+            "O campo magnético gerado apagou os pacotes iônicos",
+            "O elétron foi repelido por excesso de ondas luminosas de interferência destrutiva lateral."
+          ],
+          respostaCorreta: 1,
+          explicacao: "Einstein rasgou os modelos mostrando fótons independentes batendo um a um; pacotes insuficientes não pagam a conta de decolagem mesmo num bombardeio numeroso."
+        },
+        {
+          id: "fis_f4_04",
+          pergunta: "Próximo Passo: Imobilizado ao tentar aferir telepaticamente o posicionamento final no espaço sideral de um elétron disparado no vácuo, esbarrando no abismo estocástico limitador.",
+          opcoes: [
+            "Aplicar a cortina cósmica Incerteza de Heisenberg na forma $$\\Delta x \\Delta p \\geq \\frac{\\hbar}{2}$$ compreendendo sua ignorância inata.",
+            "Congelar a partícula com radiação absoluta ressonante nula ativando supercondutores",
+            "Disparar flashes contínuos de raios gama rasgando tudo",
+            "Elevar seu momento até transitar para a dualidade newtoniana"
+          ],
+          respostaCorreta: 0,
+          explicacao: "A regra áurea quântica não advém de limites dos equipamentos, mas da propriedade intrínseca da natureza dual oscilante vetando o escrutínio cirúrgico duplo."
+        },
+        {
+          id: "fis_f4_05",
+          pergunta: "Verdadeiro ou Falso: Um oráculo lendo o núcleo em colapso da Equação de onda mágica de Schrödinger captura de supetão o trânsito balístico tridimensional linear estrito orbitando as densidades quânticas da matéria.",
+          opcoes: [
+            "Verdadeiro, descreve elipses cósmicas",
+            "Falso, ela canta exclusivamente melodias caóticas probabilísticas; a densidade espacial ($$|\\Psi|^2$$) apenas sussurra as chances fantasmas de achar o ente quântico no véu espectral.",
+            "Verdadeiro, o determinismo de Laplace garante isso de forma cravada se for sem ruído estático em zero Kelvin",
+            "Falso, a função destrói-se antes da observação gravitacional local."
+          ],
+          respostaCorreta: 1,
+          explicacao: "Trajetórias balísticas não importam mais, reinando na matéria a majestade das neblinas probabilísticas sem garantias orbitais clássicas no caos estatístico da criação atômica."
+        }
+      ]
+    }
+  ]
+};
+
+        const { useState, useEffect, useRef } = React;
+
+        function LatexRenderer({ text }) {
+            const containerRef = useRef(null);
+            useEffect(() => {
+                if (containerRef.current && window.renderMathInElement) {
+                    window.renderMathInElement(containerRef.current, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }, [text]);
+            return <span ref={containerRef} className="whitespace-pre-wrap">{text}</span>;
+        }
+
+        function App() {
+            const [velas, setVelas] = useState(5);
+            const [graus, setGraus] = useState(0);
+            const [areaSelecionada, setAreaSelecionada] = useState(null);
+            const [faseAtual, setFaseAtual] = useState(null);
+            const [indiceQuestao, setIndiceQuestao] = useState(0);
+            const [opcoesEmbaralhadas, setOpcoesEmbaralhadas] = useState([]);
+            const [animacao, setAnimacao] = useState(null);
+
+            useEffect(() => {
+                if (faseAtual && faseAtual.questoes && faseAtual.questoes[indiceQuestao]) {
+                    const q = faseAtual.questoes[indiceQuestao];
+                    const opcoesMapeadas = q.opcoes.map((texto, index) => ({
+                        texto: texto,
+                        correta: index === q.respostaCorreta
+                    }));
+                    const shuffled = [...opcoesMapeadas];
+                    for (let i = shuffled.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                    }
+                    setOpcoesEmbaralhadas(shuffled);
+                }
+            }, [faseAtual, indiceQuestao]);
+
+            const Header = ({ title }) => (
+                <header className="flex justify-between items-center p-4 border-b border-tinta bg-pergaminho sticky top-0 z-10 shrink-0">
+                    <div className="text-xl font-bold flex items-center gap-1">
+                        <span>{velas}</span> <span>🕯️</span>
+                    </div>
+                    {title && <div className="text-sm font-semibold text-tinta/80 italic text-center px-2">{title}</div>}
+                    <div className="text-xl font-bold flex items-center gap-1">
+                        <span>{graus}</span> <span>🧭</span>
+                    </div>
+                </header>
+            );
+
+            if (velas <= 0) {
+                return (
+                    <div className="flex flex-col items-center justify-center h-full min-h-dvh md:min-h-0 bg-tinta text-pergaminho p-6 text-center">
+                        <h1 className="text-4xl mb-8 font-bold">A escuridão tomou conta</h1>
+                        <button 
+                            onClick={() => {
+                                setVelas(5);
+                                setFaseAtual(null);
+                                setAreaSelecionada(null);
+                            }}
+                            className="text-lg border-2 border-pergaminho px-6 py-3 hover:bg-pergaminho hover:text-tinta transition-all uppercase tracking-widest"
+                        >
+                            Acender Velas
+                        </button>
+                    </div>
+                );
+            }
+
+            if (areaSelecionada === null) {
+                return (
+                    <div className="flex flex-col h-full min-h-dvh md:min-h-0 bg-pergaminho no-scrollbar overflow-y-auto">
+                        <Header />
+                        <main className="flex-grow flex flex-col items-center justify-center p-6 pb-12">
+                            <h1 className="text-3xl md:text-5xl text-center mb-10 md:mb-16 font-bold leading-snug">Qual tratado<br/>desejas decifrar?</h1>
+                            <div className="flex flex-col md:flex-row gap-6 w-full max-w-[320px] md:max-w-3xl justify-center">
+                                <button 
+                                    onClick={() => setAreaSelecionada('matematica')}
+                                    className="w-full p-8 md:p-12 border-2 border-tinta hover:bg-tinta/5 hover:border-destaque transition-all text-2xl md:text-3xl leading-relaxed text-center"
+                                >
+                                    A Arte da<br/>Matemática
+                                </button>
+                                <button 
+                                    onClick={() => setAreaSelecionada('fisica')}
+                                    className="w-full p-8 md:p-12 border-2 border-tinta hover:bg-tinta/5 hover:border-destaque transition-all text-2xl md:text-3xl leading-relaxed text-center"
+                                >
+                                    A Filosofia<br/>Natural
+                                </button>
+                            </div>
+                        </main>
+                    </div>
+                );
+            }
+
+            if (faseAtual === null) {
+                const fases = window.BANCO_DE_QUESTOES && window.BANCO_DE_QUESTOES[areaSelecionada] ? window.BANCO_DE_QUESTOES[areaSelecionada] : [];
+                return (
+                    <div className="flex flex-col h-full min-h-dvh md:min-h-0 bg-pergaminho no-scrollbar overflow-y-auto">
+                        <Header />
+                        <main className="flex-grow flex flex-col items-center p-6 pb-12 w-full max-w-4xl mx-auto">
+                            <h1 className="text-3xl md:text-4xl mb-8 uppercase tracking-widest border-b border-tinta pb-2">Trilha</h1>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:gap-6">
+                                {fases.map((fase, idx) => {
+                                    return (
+                                        <button 
+                                            key={idx}
+                                            onClick={() => {
+                                                setFaseAtual(fase);
+                                                setIndiceQuestao(0);
+                                                setAnimacao(null);
+                                            }}
+                                            className="p-5 md:p-8 border-2 flex flex-col justify-center items-center text-xl md:text-2xl transition-all w-full text-center border-tinta bg-pergaminho hover:bg-tinta hover:text-pergaminho text-tinta"
+                                        >
+                                            <span className="font-semibold">{idx + 1}. {fase.nome || 'Desconhecida'}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            <button 
+                                onClick={() => setAreaSelecionada(null)}
+                                className="mt-10 text-xl md:text-2xl border-b border-tinta hover:text-destaque hover:border-destaque pb-1"
+                            >
+                                &larr; Voltar
+                            </button>
+                        </main>
+                    </div>
+                );
+            }
+
+            const questao = faseAtual.questoes[indiceQuestao];
+            if (!questao) {
+                return (
+                    <div className="flex flex-col h-full min-h-dvh md:min-h-0 bg-pergaminho items-center justify-center p-6 text-center">
+                        <h1 className="text-4xl mb-6 font-bold text-green-800">Tratado Concluído!</h1>
+                        <button 
+                            onClick={() => setFaseAtual(null)}
+                            className="text-xl border-2 border-tinta px-6 py-3 hover:bg-tinta hover:text-pergaminho transition-all"
+                        >
+                            Retornar à Trilha
+                        </button>
+                    </div>
+                );
+            }
+
+            const responder = (correta) => {
+                if (animacao) return;
+
+                if (correta) {
+                    setAnimacao('acerto');
+                    setTimeout(() => {
+                        setAnimacao(null);
+                        setGraus(g => g + 25);
+                        setIndiceQuestao(i => i + 1);
+                    }, 1200);
+                } else {
+                    setAnimacao('erro');
+                    setTimeout(() => {
+                        setAnimacao(null);
+                        setVelas(v => v - 1);
+                        
+                        setFaseAtual(fase => {
+                            const novaFase = { ...fase };
+                            const questaoAtual = novaFase.questoes[indiceQuestao];
+                            novaFase.questoes = [...novaFase.questoes];
+                            novaFase.questoes.push(questaoAtual);
+                            return novaFase;
+                        });
+                        
+                        setIndiceQuestao(i => i + 1);
+                    }, 1200);
+                }
+            };
+
+            return (
+                <div className="flex flex-col h-full min-h-dvh md:min-h-0 bg-pergaminho no-scrollbar overflow-y-auto">
+                    <Header title={`Questão ${indiceQuestao + 1}`} />
+                    <main className="flex-grow flex flex-col items-center p-4 pb-12 w-full max-w-4xl mx-auto">
+                        <div className="w-full flex justify-start mb-4 max-w-[360px] md:max-w-2xl">
+                            <button 
+                                onClick={() => setFaseAtual(null)}
+                                className="text-lg md:text-xl font-medium border-b border-tinta hover:text-destaque hover:border-destaque transition-colors flex items-center gap-2"
+                            >
+                                &larr; Retornar ao Mapa
+                            </button>
+                        </div>
+                        <div className={`w-full max-w-[360px] md:max-w-2xl p-5 md:p-8 border-2 shadow-sm transition-all duration-300 flex flex-col ${
+                            animacao === 'erro' ? 'border-red-600 bg-red-100/50 animate-shake' : 
+                            animacao === 'acerto' ? 'border-green-600 bg-green-100/50 animate-pulse-green' : 'border-tinta bg-pergaminho/30'
+                        }`}>
+                            <h2 className="text-xl md:text-2xl mb-6 md:mb-8 leading-relaxed font-bold border-b border-tinta/30 pb-4">
+                                <LatexRenderer text={questao.pergunta} />
+                            </h2>
+                            <div className="flex flex-col gap-3 md:gap-5">
+                                {opcoesEmbaralhadas.map((op, idx) => {
+                                    let btnClasses = "border-tinta/40 hover:bg-tinta/10";
+                                    if (animacao !== null) {
+                                        if (op.correta) {
+                                            btnClasses = "border-green-600 bg-green-600/20 text-green-900 font-bold";
+                                        } else {
+                                            btnClasses = "border-tinta/20 text-tinta/40 opacity-50";
+                                        }
+                                    }
+                                    return (
+                                        <button 
+                                            key={idx}
+                                            disabled={animacao !== null}
+                                            onClick={() => responder(op.correta)}
+                                            className={`text-left text-[1.1rem] md:text-xl leading-snug p-4 md:p-6 border transition-colors font-medium ${btnClasses}`}
+                                        >
+                                            <LatexRenderer text={op.texto} />
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
